@@ -146,11 +146,7 @@ void writeLightStates() {
 }
 
 void incrementMainState() {
-  if (mainState < 5) {
-    mainState ++;
-  } else {
-    mainState = 0;
-  }
+  mainState = (mainState < 5) ? ++mainState : 0;
 }
 
 void asyncButton() {
