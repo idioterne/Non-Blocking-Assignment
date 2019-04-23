@@ -45,12 +45,13 @@ int tl2_RedState = LOW;
 // utils
 const long INTERVAL = 2000;   // interval between state change
 int mainState = 0;            // mainstate represents the traficlights formation
+long previousTime = 0;
 long currentTime;
-long previousTime;
+
+// button configuration
+const int BUTTON_PIN = 2;
 
 void setup() {
-  previousTime = 0;
-  
   pinMode(TL1_GREEN_PIN, OUTPUT); 
   pinMode(TL1_YELLOW_PIN, OUTPUT); 
   pinMode(TL1_RED_PIN, OUTPUT); 
@@ -58,6 +59,9 @@ void setup() {
   pinMode(TL2_GREEN_PIN, OUTPUT); 
   pinMode(TL2_YELLOW_PIN, OUTPUT); 
   pinMode(TL2_RED_PIN, OUTPUT); 
+  
+  pinMode(BUTTON_PIN, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
@@ -70,8 +74,9 @@ void loop() {
     writeLightStates();     // writes lightstates to digital pins
     incrementMainState();   // increments mainstate
   }
-
-  // code here can be exuceted while the ligth are waiting... 
+  
+  // code here can be exuceted asynchronous while the ligth are waiting... 
+  asyncButton(); 
 }
 
 void resetLightStates() {
@@ -145,5 +150,13 @@ void incrementMainState() {
     mainState ++;
   } else {
     mainState = 0;
+  }
+}
+
+void asyncButton() {
+  if (digitalRead(BUTTON_PIN) == HIGH) {
+    digitalWrite(LED_BUILTIN, HIGH);
+  } else {
+    digitalWrite(LED_BUILTIN, LOW);
   }
 }
