@@ -1,6 +1,6 @@
 
 /*
- *  NON-BLOCKING TRAFFIC LIGHT
+ *  NON-BLOCKING TRAFICLIGHTS
  *  -----------------------------
  *  
  *  tinkercad: https://www.tinkercad.com/things/251WpyNofbW
@@ -154,9 +154,5 @@ void incrementMainState() {
 }
 
 void asyncButton() {
-  if (digitalRead(BUTTON_PIN) == HIGH) {
-    digitalWrite(LED_BUILTIN, HIGH);
-  } else {
-    digitalWrite(LED_BUILTIN, LOW);
-  }
+  digitalWrite(LED_BUILTIN, digitalRead(BUTTON_PIN));
 }
