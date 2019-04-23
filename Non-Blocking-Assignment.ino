@@ -5,7 +5,7 @@
  *  
  *  tinkercad: https://www.tinkercad.com/things/251WpyNofbW
  *  
- *  State Configurations
+ *  Main State Configurations
  *  ------------------------
  *    STATE 0     |    STATE 1     |    STATE 2     |    STATE 3     |    STATE 4     |    STATE 5     |
  *                |                |                |                |                |                |
@@ -20,6 +20,8 @@
  *          ####  |          ####  |    ####  ####  |    ####        |    ####        |    ####  ####  |
  *          ####  |          ####  |    ####  ####  |    ####        |    ####        |    ####  ####  |
  *          ####  |          ####  |    ####  ####  |    ####        |    ####        |    ####  ####  |
+ *                |                |                |                |                |                |
+ *    TL1 - TL2   |    TL1 - TL2   |    TL1 - TL2   |    TL1 - TL2   |    TL1 - TL2   |    TL1 - TL2   |   
  */
 
 // traficlight 1 pins
@@ -51,6 +53,7 @@ long currentTime;
 // button configuration
 const int BUTTON_PIN = 2;
 
+//
 void setup() {
   pinMode(TL1_GREEN_PIN, OUTPUT); 
   pinMode(TL1_YELLOW_PIN, OUTPUT); 
@@ -64,12 +67,15 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
+//
 void loop() {
   currentTime = millis();
+  
+  // 
   if (currentTime - previousTime >= INTERVAL || previousTime == 0) {
-    previousTime = currentTime;
+    previousTime = currentTime; // updates previous time to current time
     
-    resetLightStates();     // resets all lightstates to LOW
+    resetLightStates();     // resets all light states to LOW
     setLightStates();       // set sellected lightstates to HIGH
     writeLightStates();     // writes lightstates to digital pins
     incrementMainState();   // increments mainstate
@@ -79,6 +85,7 @@ void loop() {
   asyncButton(); 
 }
 
+// sets all light states to LOW
 void resetLightStates() {
   // traficlight 1 state
   tl1_GreenState = LOW;
@@ -91,6 +98,7 @@ void resetLightStates() {
   tl2_RedState = LOW;
 }
 
+// set sellected lightstates to HIGH (Reference at Main State Configuration diagram)
 void setLightStates() {
   switch(mainState) {
     case 0: {
@@ -133,6 +141,7 @@ void setLightStates() {
   }
 }
 
+// writes all pin values so the updated states will light the LEDs
 void writeLightStates() {
   // traficlight 1 state
   digitalWrite(TL1_GREEN_PIN, tl1_GreenState);
@@ -145,10 +154,12 @@ void writeLightStates() {
   digitalWrite(TL2_RED_PIN, tl2_RedState);
 }
 
+// increments mainState and resets when the state reaches above 5 (conditional operator)
 void incrementMainState() {
   mainState = (mainState < 5) ? ++mainState : 0;
 }
 
+// sets the LED_BUILTIN to high each time the button is pressed (asynchronous)
 void asyncButton() {
   digitalWrite(LED_BUILTIN, digitalRead(BUTTON_PIN));
 }
