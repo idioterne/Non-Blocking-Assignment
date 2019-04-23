@@ -43,7 +43,7 @@ int tl2_YellowState = LOW;
 int tl2_RedState = LOW;
 
 // utils
-const long INTERVAL = 2000;   // interval between state change
+const long INTERVAL = 1000;   // interval between state change
 int mainState = 0;            // mainstate represents the traficlights formation
 long previousTime = 0;
 long currentTime;
@@ -66,7 +66,7 @@ void setup() {
 
 void loop() {
   currentTime = millis();
-  if (currentTime - previousTime >= INTERVAL) {
+  if (currentTime - previousTime >= INTERVAL || previousTime == 0) {
     previousTime = currentTime;
     
     resetLightStates();     // resets all lightstates to LOW
