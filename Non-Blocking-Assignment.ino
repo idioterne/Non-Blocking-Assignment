@@ -1,9 +1,9 @@
 
 /*
- *  NON-BLOCKING TRAFICLIGHTS
+ *  NON-BLOCKING TRAFFIC LIGHT
  *  -----------------------------
  *  
- *  tinkercad: https://www.tinkercad.com/things/d49A9htu0hC
+ *  tinkercad: https://www.tinkercad.com/things/251WpyNofbW
  *  
  *  State Configurations
  *  ------------------------
